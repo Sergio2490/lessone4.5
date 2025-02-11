@@ -2,6 +2,7 @@
 
 import pygame
 pygame.init()  #эта ф-я авт-ки иниц-т все необходимые модули pygame. Без нее ничего раб не б.
+import time  # импортируем библ-ку time для задержки
 
 window_size = (800, 600)  #перем. c размерfvb окна: ширина, высота
 screen = pygame.display.set_mode(window_size) #создаём окно
@@ -22,7 +23,9 @@ while run:  #НАЧАЛО БЕСКОНЕЧ.ИГРОВОГО ЦИКЛА. пОКА
             mouseX, mouseY = pygame.mouse.get_pos() #в две перем-е сохранили коорд х и у нашей мышки
             image_rect1.x = mouseX - 30 # передаем тек знач-е коорд Х мышки рамке изображения
             image_rect1.y = mouseY - 30 # -30 - чт курсор был по центру, смещаем само изобр на -30 относит курсора мыши
-
+    if image_rect1.colliderect(image_rect2):
+        print("Произошло столкновение")
+        time.sleep(1)
 
 
     screen.fill((0,0,0)) #заливает фон окна черным цветом. Двойные скобки - тк передаем кортеж
