@@ -1,5 +1,5 @@
 # Игра Пинг - Понг
-
+    
 import pygame
 import sys
 
