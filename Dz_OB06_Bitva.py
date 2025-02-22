@@ -46,6 +46,5 @@ class Game:
                 print(f"{self.player.name} повержен! {self.computer.name} победил!")
                 break
 
-#if __name__ == "__main__":
 game = Game("Игрок Геркулес")
 game.start()
