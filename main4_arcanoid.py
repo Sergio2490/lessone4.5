@@ -37,3 +37,23 @@ while running:
     for event in pygame.event.get():   # перебираем события в игре
         if event.type == pygame.QUIT:  # если произошло событие выхода - крестик справа вверху окна
             running = False            # то завершаем цикл и выходим из программы
+
+    # Движение платформы
+    keys = pygame.key.get_pressed()  # Считываем нажатие на клавиши
+    if [pygame.K_LEFT] and paddle_x >0:  # нажата стрелка влево и положение платформы не выходит за пред. экрана слева
+        paddle_x -= paddle_speed   # перемещаем платформу влево
+    if [pygame.K_RIGHT] and paddle_x < screen_width - paddle_width:
+        paddle_x += paddle_speed
+
+    # Столкновение с краями экрана
+    if ball_x <= 0 or ball_x >= screen_width: # если мяч сталкивается с краями экрана, меняем его скорость
+        ball_speed_x = -ball_speed_x   # (а значит, и направление на противоположные
+    if ball_y <= 0:
+        ball_speed_y = -ball_speed_y
+    if ball_y >= screen_height:
+        #Сброс мяча, если он столкнулся с нижним краем экрана (упал)
+        ball_x, ball_y = screen_width // 2, paddle_y-ball_radius
+        ball_speed_y = -ball_speed_y
+
+        
+
