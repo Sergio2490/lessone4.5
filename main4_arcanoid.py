@@ -40,10 +40,14 @@ while running:
 
     # Движение платформы
     keys = pygame.key.get_pressed()  # Считываем нажатие на клавиши
-    if [pygame.K_LEFT] and paddle_x >0:  # нажата стрелка влево и положение платформы не выходит за пред. экрана слева
+    if keys[pygame.K_LEFT] and paddle_x >0:  # нажата стрелка влево и положение платформы не выходит за пред. экрана слева
         paddle_x -= paddle_speed   # перемещаем платформу влево
-    if [pygame.K_RIGHT] and paddle_x < screen_width - paddle_width:
+    if keys[pygame.K_RIGHT] and paddle_x < screen_width - paddle_width:
         paddle_x += paddle_speed
+
+    # Движение мяча
+    ball_x += ball_speed_x
+    ball_y += ball_speed_y
 
     # Столкновение с краями экрана
     if ball_x <= 0 or ball_x >= screen_width: # если мяч сталкивается с краями экрана, меняем его скорость
@@ -55,5 +59,29 @@ while running:
         ball_x, ball_y = screen_width // 2, paddle_y-ball_radius
         ball_speed_y = -ball_speed_y
 
-        
+    # Столкновение мяча с платформой
+    if paddle_x <= ball_x <= paddle_x + paddle_width and paddle_y <= ball_y + ball_radius <= paddle_y +paddle_height:
+        ball_speed_y = -ball_speed_y
+
+    # Очистка экрана
+    screen.fill(BLACK)  # Заливка экрана черным цветом
+
+    # Отрисовка платформы и мяча
+    pygame.draw.rect(screen, WHITE, (paddle_x, paddle_y, paddle_width, paddle_height))
+    pygame.draw.circle(screen, BLUE, (ball_x, ball_y), ball_radius)
+
+    # Обновление экрана
+    pygame.display.flip()
+
+    # Ограничение количества кадров в секунду (Контроль FPS)
+    clock.tick(FPS)  #чтобы не было слишком много кадров в сек, иначе слишком много раз в сек цикл сработает и слишком быстро передвинет мяч
+
+pygame.quit()
+sys.exit()
+
+
+
+
+
+
 
