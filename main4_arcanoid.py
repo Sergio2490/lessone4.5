@@ -8,6 +8,16 @@ screen_width, screen_height = 600, 400
 screen = pygame.display.set_mode((screen_width, screen_height))  #создаем окно с размерами
 pygame.display.set_caption("Арканоид")
 
+#Параметры кирпичей
+brick_rows = 5 #кол-во кирпичей по вертикали (линий)
+brick_cols = 10 #кол-во кирпичей по горизонтали (столбцы)
+brick_width = screen_width // brick_cols #ширина одного кирпича
+brick_height = 20 #высота одного кирпича
+brick_gap = 5 #Промежуток между кирпичами
+
+#Список кирпичей
+bricks = [(col * (brick_width + brick_gap), row * (brick_height + brick_gap)) for row in range(brick_rows) for col in range(brick_cols)]
+
 # Цвета
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
@@ -65,6 +75,18 @@ while running:
 
     # Очистка экрана
     screen.fill(BLACK)  # Заливка экрана черным цветом
+
+    #Рисование кирпичей
+    for brick in bricks:
+        pygame.draw.rect(screen, WHITE, pygame.Rect(brick[0], brick[1], brick_width, brick_height))
+
+    # Столкновение мяча с кирпичами
+    brick_rects = [pygame.Rect(brick[0], brick[1], brick_width, brick_height) for brick in bricks]
+    for i, brick_rect in enumerate(brick_rects):
+        if brick_rect.collidepoint(ball_x, ball_y):
+            bricks.pop(i)
+            ball_speed_y = -ball_speed_y
+            break
 
     # Отрисовка платформы и мяча
     pygame.draw.rect(screen, WHITE, (paddle_x, paddle_y, paddle_width, paddle_height))
